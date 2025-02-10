@@ -24,7 +24,8 @@ FROM node:alpine AS deployer
 
 # Створюємо каталог та копіюємо файли з першого образу
 RUN mkdir -p /html
-COPY --from=builder /app/public /html
+RUN ls -la /app
+COPY --from=builder /app/build /html
 
 
 # Тест виводимо вміст скопійованого каталогу
