@@ -34,7 +34,6 @@ Posts have the following properties: `id`, `title` and `content`.
 Comments have the following properties: `id`, `post_id` and `content`.
 
 ## Authentication
-
 The included auth provider should only be used for development and test purposes.
 You'll find a `users.json` file in the `src` directory that includes the users you can use.
 
