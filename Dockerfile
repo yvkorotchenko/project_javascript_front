@@ -19,12 +19,13 @@ COPY . ./
 # Виконуємо команду для запуску збірки
 RUN npm run build
 
+RUN ls -la /app
 # Використовуємо легкий образ для другого етапу
 FROM node:alpine AS deployer
 
 # Створюємо каталог та копіюємо файли з першого образу
 RUN mkdir -p /html
-RUN ls -la /app
+
 COPY --from=builder /app/build /html
 
 
