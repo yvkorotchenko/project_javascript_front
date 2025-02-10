@@ -19,19 +19,13 @@ COPY . ./
 # Виконуємо команду для запуску збірки
 RUN npm run build
 
-RUN ls -la /app
 # Використовуємо легкий образ для другого етапу
 FROM node:alpine AS deployer
 
 # Створюємо каталог та копіюємо файли з першого образу
 RUN mkdir -p /html
 
-COPY --from=builder /app/build /html
-
-
-# Тест виводимо вміст скопійованого каталогу
-RUN ls -la /html
-
+COPY --from=builder /app/dist /html
 
 # Виконуємо команду для запуску сервера розробки
 ENTRYPOINT ["npm", "run", "dev"]
