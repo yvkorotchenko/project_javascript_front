@@ -11,7 +11,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Встановлюємо залежності
-RUN npm install --legacy-peer-deps
+RUN npm ci --legacy-peer-deps
 
 # Копіюємо всі інші файли
 COPY . ./
@@ -20,13 +20,10 @@ COPY . ./
 RUN npm run build
 
 # Використовуємо легкий образ для другого етапу
-FROM node:alpine AS deployer
+FROM nginx:alpine AS deployer
 
-# Створюємо каталог та копіюємо файли з першого образу
-RUN mkdir -p /html
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-COPY --from=builder /app/dist /html
-
-# Виконуємо команду для запуску сервера розробки
-ENTRYPOINT ["npm", "run", "dev"]
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
 
